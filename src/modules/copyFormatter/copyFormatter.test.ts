@@ -55,9 +55,9 @@ describe('generateCopyText - Test Case 1: Normal case with multiple players', ()
     ]
 
     const expected = [
-      '13:10:00 13:11:40 Alice',
-      '13:10:11 13:11:41 Bob',
-      '13:10:22 13:11:42 Charlie'
+      '13:10:00 Alice',
+      '13:10:11 Bob',
+      '13:10:22 Charlie'
     ].join('\n')
 
     expect(generateCopyText(baseTimeSeconds, results)).toBe(expected)
@@ -95,11 +95,11 @@ describe('generateCopyText - Test Case 2: Edge case - midnight crossing', () => 
     const output = generateCopyText(baseTimeSeconds, results)
     const lines = output.split('\n')
 
-    // First player: start at 23:59:50, arrive at 23:59:50 + 20 = 24:00:10
-    expect(lines[0]).toBe('23:59:50 24:00:10 Player1')
+    // First player: start at 23:59:50
+    expect(lines[0]).toBe('23:59:50 Player1')
 
-    // Second player: start at 23:59:51, arrive at 23:59:51 + 25 = 24:00:16
-    expect(lines[1]).toBe('23:59:51 24:00:16 Player2')
+    // Second player: start at 23:59:51
+    expect(lines[1]).toBe('23:59:51 Player2')
   })
 })
 
@@ -118,7 +118,7 @@ describe('generateCopyText - Test Case 3: Empty or single player', () => {
       { name: 'Solo', marchTime: 50, startTime: 0, arrivalTime: 50, order: 1 }
     ]
 
-    const expected = '14:30:00 14:30:50 Solo'
+    const expected = '14:30:00 Solo'
 
     expect(generateCopyText(baseTimeSeconds, results)).toBe(expected)
   })
@@ -130,8 +130,8 @@ describe('generateCopyText - Test Case 3: Empty or single player', () => {
       { name: 'LongMarcher', marchTime: 7200, startTime: 0, arrivalTime: 7200, order: 1 }
     ]
 
-    // Start: 01:00:00, Arrival: 01:00:00 + 7200s = 03:00:00
-    const expected = '01:00:00 03:00:00 LongMarcher'
+    // Start: 01:00:00
+    const expected = '01:00:00 LongMarcher'
 
     expect(generateCopyText(baseTimeSeconds, results)).toBe(expected)
   })

@@ -67,7 +67,7 @@ export function ResultsTable() {
                 Copy to Clipboard
               </h4>
               <p className="text-xs text-slate-500 mb-3">
-                Enter a base time to copy formatted start/arrival times for all players
+                Enter a base time to copy formatted start times for all players
               </p>
               <CopyInfoInput
                 onCopy={handleCopy}

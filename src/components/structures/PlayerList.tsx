@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Calculator, Plus } from 'lucide-react'
 import { PlayerListItem } from '@/components/molecules/PlayerListItem'
 import { AutoUpdateToggle } from '@/components/molecules/AutoUpdateToggle'
+import { ArrivalModeSelect } from '@/components/molecules/ArrivalModeSelect'
 
 export function PlayerList() {
   const players = useStore((state) => state.players)
@@ -24,6 +25,8 @@ export function PlayerList() {
   const setEditingPlayerName = useStore((state) => state.setEditingPlayerName)
   const autoUpdate = useStore((state) => state.autoUpdate)
   const toggleAutoUpdate = useStore((state) => state.toggleAutoUpdate)
+  const arrivalMode = useStore((state) => state.arrivalMode)
+  const setArrivalMode = useStore((state) => state.setArrivalMode)
   const calculateResults = useStore((state) => state.calculateResults)
   const clearResults = useStore((state) => state.clearResults)
 
@@ -58,6 +61,13 @@ export function PlayerList() {
 
   const handleMovePlayer = (index: number, direction: 'up' | 'down') => {
     movePlayer(index, direction)
+    if (!autoUpdate) {
+      clearResults()
+    }
+  }
+
+  const handleArrivalModeChange = (mode: typeof arrivalMode) => {
+    setArrivalMode(mode)
     if (!autoUpdate) {
       clearResults()
     }
@@ -152,6 +162,13 @@ export function PlayerList() {
               </Button>
             </div>
           </div>
+        </div>
+
+        <div className="mb-4 p-4 bg-white border border-slate-200 rounded-lg">
+          <ArrivalModeSelect
+            value={arrivalMode}
+            onValueChange={handleArrivalModeChange}
+          />
         </div>
 
         <div className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-lg">

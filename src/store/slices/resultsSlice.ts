@@ -2,6 +2,7 @@ import { StateCreator } from 'zustand'
 import type { Result } from '@/modules/calculator'
 import { calculateStartTimes } from '@/modules/calculator'
 import type { PlayersSlice } from './playersSlice'
+import type { UISlice } from './uiSlice'
 
 export interface ResultsSlice {
   results: Result[] | null
@@ -10,7 +11,7 @@ export interface ResultsSlice {
 }
 
 export const createResultsSlice: StateCreator<
-  PlayersSlice & ResultsSlice,
+  PlayersSlice & ResultsSlice & UISlice,
   [],
   [],
   ResultsSlice
@@ -18,7 +19,7 @@ export const createResultsSlice: StateCreator<
   results: null,
 
   calculateResults: () => {
-    const { players } = get()
+    const { players, arrivalMode } = get()
 
     if (players.length === 0) {
       set({ results: null })
@@ -30,7 +31,7 @@ export const createResultsSlice: StateCreator<
       index: i
     }))
 
-    const calculations = calculateStartTimes(inputs)
+    const calculations = calculateStartTimes(inputs, arrivalMode)
 
     const results = players.map((player, index) => ({
       name: player.name,
