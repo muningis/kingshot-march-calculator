@@ -53,7 +53,7 @@ export function formatTimeToHHMMSS(seconds: number): string {
 
 /**
  * Generates formatted copy text from results with base time offset
- * Format: "{startTime} {arriveTime} {playerName}" per line
+ * Format: "{startTime} {playerName}" per line
  * Sorted by start time (earliest first)
  * @param baseTimeSeconds - Base time offset in seconds since midnight
  * @param results - Array of calculation results
@@ -73,12 +73,9 @@ export function generateCopyText(
   // Format each result
   const lines = sortedResults.map(result => {
     const absoluteStartTime = baseTimeSeconds + result.startTime
-    const absoluteArrivalTime = baseTimeSeconds + result.arrivalTime
-
     const startTimeFormatted = formatTimeToHHMMSS(absoluteStartTime)
-    const arrivalTimeFormatted = formatTimeToHHMMSS(absoluteArrivalTime)
 
-    return `${startTimeFormatted} ${arrivalTimeFormatted} ${result.name}`
+    return `${startTimeFormatted} ${result.name}`
   })
 
   return lines.join('\n')

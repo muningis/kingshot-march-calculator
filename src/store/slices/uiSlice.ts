@@ -1,16 +1,19 @@
 import { StateCreator } from 'zustand'
+import type { ArrivalMode } from '@/modules/calculator'
 
 export interface UISlice {
   editingPlayerId: number | null
   editingMarchTime: string
   editingPlayerName: string
   autoUpdate: boolean
+  arrivalMode: ArrivalMode
   startEditing: (playerId: number, currentMarchTime: number) => void
   startEditingName: (playerId: number, currentName: string) => void
   stopEditing: () => void
   setEditingMarchTime: (value: string) => void
   setEditingPlayerName: (value: string) => void
   toggleAutoUpdate: () => void
+  setArrivalMode: (mode: ArrivalMode) => void
 }
 
 export const createUISlice: StateCreator<UISlice> = (set) => ({
@@ -18,6 +21,7 @@ export const createUISlice: StateCreator<UISlice> = (set) => ({
   editingMarchTime: '',
   editingPlayerName: '',
   autoUpdate: false,
+  arrivalMode: 'sequential',
 
   startEditing: (playerId: number, currentMarchTime: number) =>
     set({
@@ -45,5 +49,8 @@ export const createUISlice: StateCreator<UISlice> = (set) => ({
     set({ editingPlayerName: value }),
 
   toggleAutoUpdate: () =>
-    set((state) => ({ autoUpdate: !state.autoUpdate }))
+    set((state) => ({ autoUpdate: !state.autoUpdate })),
+
+  setArrivalMode: (mode: ArrivalMode) =>
+    set({ arrivalMode: mode })
 })

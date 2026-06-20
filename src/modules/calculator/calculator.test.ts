@@ -133,3 +133,47 @@ describe('calculateStartTimes', () => {
     expect(results[1].arrivalTime - results[0].arrivalTime).toBe(1)
   })
 })
+
+describe('calculateMinArrivalTime - simultaneous mode', () => {
+  test('should return the largest march time', () => {
+    const inputs: CalculationInput[] = [
+      { marchTime: 100, index: 0 },
+      { marchTime: 90, index: 1 },
+      { marchTime: 120, index: 2 }
+    ]
+    expect(calculateMinArrivalTime(inputs, 'simultaneous')).toBe(120)
+  })
+})
+
+describe('calculateStartTimes - simultaneous mode', () => {
+  test('should make all players arrive at the same second', () => {
+    const inputs: CalculationInput[] = [
+      { marchTime: 100, index: 0 },
+      { marchTime: 90, index: 1 },
+      { marchTime: 80, index: 2 }
+    ]
+    const results = calculateStartTimes(inputs, 'simultaneous')
+
+    // All arrive at max march time = 100
+    expect(results[0].arrivalTime).toBe(100)
+    expect(results[1].arrivalTime).toBe(100)
+    expect(results[2].arrivalTime).toBe(100)
+
+    expect(results[0].startTime).toBe(0)
+    expect(results[1].startTime).toBe(10)
+    expect(results[2].startTime).toBe(20)
+  })
+
+  test('should ensure all start times are non-negative', () => {
+    const inputs: CalculationInput[] = [
+      { marchTime: 50, index: 0 },
+      { marchTime: 100, index: 1 },
+      { marchTime: 75, index: 2 }
+    ]
+    const results = calculateStartTimes(inputs, 'simultaneous')
+
+    results.forEach(result => {
+      expect(result.startTime).toBeGreaterThanOrEqual(0)
+    })
+  })
+})
