@@ -3,9 +3,9 @@ output "tls_secret_name" {
 }
 
 output "hosts" {
-  value = module.edge.hosts
+  value = local.hosts
 }
 
 output "url" {
-  value = "https://${local.staging_host}"
+  value = "https://${local.staging_hosts[0]}"
 }
